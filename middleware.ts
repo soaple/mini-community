@@ -5,7 +5,10 @@ export const config = {
 };
 
 function middleware(req: NextRequest) {
-    const isAuthenticated = !!req.cookies.get('next-auth.session-token');
+    const sessionToken = req.cookies.getAll().find((cookie) => {
+        return cookie.name.endsWith('next-auth.session-token');
+    });
+    const isAuthenticated = !!sessionToken;
 
     switch (req.nextUrl.pathname) {
         case '/sign-in':
