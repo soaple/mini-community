@@ -1,12 +1,17 @@
 'use client';
 
 import { type PropsWithChildren } from 'react';
+import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 
-function SessionProviderWrapper(props: PropsWithChildren) {
-    const { children } = props;
+type SessionProviderWrapperProps = PropsWithChildren<{
+    session: Session | null;
+}>;
 
-    return <SessionProvider>{children}</SessionProvider>;
+function SessionProviderWrapper(props: SessionProviderWrapperProps) {
+    const { session, children } = props;
+
+    return <SessionProvider session={session}>{children}</SessionProvider>;
 }
 
 export default SessionProviderWrapper;
